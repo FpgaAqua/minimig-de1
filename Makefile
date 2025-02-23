@@ -27,22 +27,22 @@ BUILD_OPT=clean all
 all:
 	@echo Building all ...
 	@mkdir -p $(REL_DIR)
-	@make ctrl_fw
-	@make ctrl_boot
-	@make fpga
+	@$(MAKE) ctrl_fw ctrl_fw
+	@$(MAKE) ctrl_boot ctrl_boot
+	@$(MAKE) fpga
 
 
-ctrl_fw: Makefile 
+ctrl_fw: Makefile
 	@echo Building ctrl firmware in $(CTRL_FW_DIR) ...
 	@$(MAKE) -C $(CTRL_FW_DIR) $(BUILD_OPT)
 	@cp $(CTRL_FW) $(REL_DIR)/
 
-ctrl_boot: Makefile 
+ctrl_boot: Makefile
 	@echo Building ctrl boot firmware in $(CTRL_BOOT_DIR) ...
 	@$(MAKE) -C $(CTRL_BOOT_DIR) $(BUILD_OPT)
 
 .PHONY: fpga
-fpga: Makefile 
+fpga: Makefile
 	@echo Building FPGA in $(FPGA_DIR) ...
 	@$(MAKE) -C $(FPGA_DIR) $(BUILD_OPT)
 	@cp $(FPGA) $(REL_DIR)/
@@ -51,7 +51,7 @@ fpga: Makefile
 # clean
 clean:
 	@echo Clearing release dir ...
-#	@rm -rf $(REL_DIR)
+	#@rm -rf $(REL_DIR)
 	@$(MAKE) -C $(CTRL_FW_DIR) clean
 	@$(MAKE) -C $(CTRL_BOOT_DIR) clean
 	@$(MAKE) -C $(FPGA_DIR) clean

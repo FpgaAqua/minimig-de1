@@ -16,4 +16,6 @@ fpga/de1/incremental_db/
 fpga/de1/out/
 fw/ctrl/bin/
 fw/ctrl_boot/bin/
-rel
+rel/*.pof
+rel/*.sof
+rel/*.bin
