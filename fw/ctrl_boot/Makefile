@@ -49,7 +49,7 @@ HEXFLAGS=-w 8 -s 1024 -n
 BUILD_USER=\"$(USER)\"
 BUILD_T=$$(date +%Y-%m-%d)
 BUILD_TIME=\"$(BUILD_T)\"
-BUILD_N=$$(cat build_num.txt)
+BUILD_N=
 BUILD_NUM=\"$(BUILD_N)\"
 BUILD_R=$$(git rev-parse --verify HEAD)
 BUILD_REV=\"$(BUILD_R)\"
@@ -103,7 +103,6 @@ bin/ctrl_boot.or32: Makefile $(LD_SCRIPT) $(ALL_SOURCES)
 	@echo $(MSG)
 	@echo $@
 	@$(CC) -Wl,-Map,$(@:.or32=.map) -D__BUILD_USER=$(BUILD_USER) -D__BUILD_TIME=$(BUILD_TIME) -D__BUILD_NUM=$(BUILD_NUM) -D__BUILD_REV=$(BUILD_REV) $(CFLAGS) $(CINCLUDES) $(ALL_SOURCES) -T$(LD_SCRIPT) -o $@
-	@printf '%s' $$(($$(cat build_num.txt) + 1)) > build_num.txt
 	@$(OBJDUMP) -DSx $@ > $(@:.or32=.dis.S)
 
 bin/ctrl_boot.bin: bin/ctrl_boot.or32
