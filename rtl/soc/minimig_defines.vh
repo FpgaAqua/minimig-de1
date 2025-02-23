@@ -22,22 +22,3 @@
 `define MINIMIG_PS2_KEYBOARD
 `define MINIMIG_PS2_MOUSE
 `endif
-
-// minimig-avnet
-`ifdef MINIMIG_AVNET
-`define MINIMIG_XILINX
-`define MINIMIG_SPARTAN3
-`define MINIMIG_VIDEO_FILTER
-`define MINIMIG_SERIAL_AUDIO
-`define MINIMIG_PS2_KEYBOARD
-`define MINIMIG_PS2_MOUSE
-`endif
-
-// mist
-`ifdef MINIMIG_MIST
-`define MINIMIG_ALTERA
-`define MINIMIG_CYCLONE3
-`define MINIMIG_VIDEO_FILTER
-`define MINIMIG_SERIAL_AUDIO
-`endif
-
