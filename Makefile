@@ -51,7 +51,9 @@ fpga: Makefile
 # clean
 clean:
 	@echo Clearing release dir ...
-	#@rm -rf $(REL_DIR)
+	@rm -f $(REL_DIR)/.sof
+	@rm -f $(REL_DIR)/.pof
+	@rm -f $(REL_DIR)/.bin
 	@$(MAKE) -C $(CTRL_FW_DIR) clean
 	@$(MAKE) -C $(CTRL_BOOT_DIR) clean
 	@$(MAKE) -C $(FPGA_DIR) clean
