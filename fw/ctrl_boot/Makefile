@@ -10,15 +10,8 @@ HEX2MIF_DIR = ../../sw/hex2mif/
 
 ### tools ###
 
-# make sure or32-elf-gcc is in path, or comment next line and set path
-OR32_TOOLCHAIN_PATH=
-
-ifndef OR32_TOOLCHAIN_PATH
-OR32_TOOLCHAIN_PATH=/opt/or1k-elf/bin/
-endif
-
 ifndef CROSS_COMPILE
-CROSS_COMPILE = $(OR32_TOOLCHAIN_PATH)or1k-elf-
+CROSS_COMPILE = or1k-elf-
 endif
 
 
@@ -68,7 +61,7 @@ OBJDIR=obj
 ### fw specific ###
 
 # include dirs
-CINCLUDES +=
+CINCLUDES += -I. -Iinclude
 
 # headers
 HEADERS=spr_defs.h or32_defs.h hardware.h string.h swap.h errors.h mmc.h fat.h
@@ -78,7 +71,7 @@ ASM_SOURCES=start.S
 
 # common sources
 COMMON_SOURCES=main.c hardware.c string.c swap.c mmc.c fat.c
- 
+
 # all sources
 ALL_SOURCES = $(ASM_SOURCES) $(COMMON_SOURCES)
 
@@ -110,7 +103,7 @@ bin/ctrl_boot.or32: Makefile $(LD_SCRIPT) $(ALL_SOURCES)
 	@echo $(MSG)
 	@echo $@
 	@$(CC) -Wl,-Map,$(@:.or32=.map) -D__BUILD_USER=$(BUILD_USER) -D__BUILD_TIME=$(BUILD_TIME) -D__BUILD_NUM=$(BUILD_NUM) -D__BUILD_REV=$(BUILD_REV) $(CFLAGS) $(CINCLUDES) $(ALL_SOURCES) -T$(LD_SCRIPT) -o $@
-	@echo -n $$(($$(cat build_num.txt) + 1)) > build_num.txt
+	@printf '%s' $$(($$(cat build_num.txt) + 1)) > build_num.txt
 	@$(OBJDUMP) -DSx $@ > $(@:.or32=.dis.S)
 
 bin/ctrl_boot.bin: bin/ctrl_boot.or32

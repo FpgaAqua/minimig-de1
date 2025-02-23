@@ -5,13 +5,12 @@
 
 ### paths ###
 # clear dir vars if these programs are in path
-VASM_DIR    = ../../sw/vasm/
 HEX2MEM_DIR = ../../sw/hex2mem/
 HEX2MIF_DIR = ../../sw/hex2mif/
 
 
 ### programs ###
-VASM    = $(VASM_DIR)vasmm68k_mot
+VASM    = vasmm68k_mot
 XXD     = xxd
 HEX2MEM = $(HEX2MEM_DIR)hex2mem.py
 HEX2MIF = $(HEX2MIF_DIR)hex2mif.py

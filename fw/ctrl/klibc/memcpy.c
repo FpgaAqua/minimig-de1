@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdint.h>
 
+__attribute__((weak))
 void *memcpy(void *dst, const void *src, size_t n)
 {
 	const char *p = src;

@@ -4,15 +4,8 @@
 
 ### tools ###
 
-# make sure or32-elf-gcc is in path, or comment next line and set path
-OR32_TOOLCHAIN_PATH=
-
-ifndef OR32_TOOLCHAIN_PATH
-OR32_TOOLCHAIN_PATH=/opt/or1k-elf/bin/
-endif
-
 ifndef CROSS_COMPILE
-CROSS_COMPILE = $(OR32_TOOLCHAIN_PATH)or1k-elf-
+CROSS_COMPILE = or1k-elf-
 endif
 
 
@@ -62,7 +55,7 @@ OBJDIR=obj
 
 
 # include dirs
-CINCLUDES += -I. -Ilib/ -Iklibc/
+CINCLUDES += -I. -Iinclude
 
 # headers
 #CHEADERS=lib/string.h lib/stdio.h hardware.h or32_defs.h spr_defs.h firmware.h config.h errors.h charrom.h fat.h fdd.h fpga.h hdd.h hdd_internal.h logo.h menu.h mmc.h osd.h rafile.h swap.h
@@ -77,7 +70,7 @@ KLIBC_SOURCES=klibc/memcmp.c klibc/memcpy.c klibc/memset.c klibc/printf.c klibc/
 COMMON_SOURCES=hardware.c boot.c config.c fat.c fdd.c fpga.c hdd.c main.c menu.c mmc.c osd.c rafile.c swap.c serial.c
 
 # all sources
-ALL_SOURCES = $(ASM_SOURCES) $(KLIBC_SOURCES) $(COMMON_SOURCES)
+ALL_SOURCES = $(ASM_SOURCES) $(COMMON_SOURCES) $(KLIBC_SOURCES)
 
 # linker script
 ROM_LD=rom.ld
@@ -110,8 +103,8 @@ all:
 bin/de1_boot.or32: Makefile $(LD_SCRIPT) $(ALL_SOURCES)
 	@echo $(MSG)
 	@echo $@
-	@$(CC) -Wl,-Map,$(@:.or32=.map) -D__BUILD_USER=$(BUILD_USER) -D__BUILD_TIME=$(BUILD_TIME) -D__BUILD_NUM=$(BUILD_NUM) -D__BUILD_REV=$(BUILD_REV) -D__BUILD_TAG=$(BUILD_TAG) $(CFLAGS) $(CINCLUDES) $(ALL_SOURCES) -T$(LD_SCRIPT) -o $@
-	@echo -n $$(($$(cat build_num.txt) + 1)) > build_num.txt
+	@$(CC) -Wl,-Map,$(@:.or32=.map) -D__BUILD_USER=$(BUILD_USER) -D__BUILD_TIME=$(BUILD_TIME) -D__BUILD_NUM=$(BUILD_NUM) -D__BUILD_REV=$(BUILD_REV) -D__BUILD_TAG=$(BUILD_TAG) $(CFLAGS) $(CINCLUDES) $(ASM_SOURCES) $(COMMON_SOURCES) $(KLIBC_SOURCES) -T$(LD_SCRIPT) -o $@
+	@printf '%s' $$(($$(cat build_num.txt) + 1)) > build_num.txt
 	@$(OBJDUMP) -DSx $@ > $(@:.or32=.dis.S)
 
 # bin file

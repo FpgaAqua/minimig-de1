@@ -96,19 +96,19 @@ int compare(const char *s1, const char *s2,int b)
 unsigned char FindDrive(void)
 {
 	unsigned long boot_sector;              // partition boot sector
-    buffered_fat_index = -1;
+	buffered_fat_index = -1;
 	fat32=0;
 
-    if (!MMC_Read(0, sector_buffer)) // read MBR
-        return(0);
+	if (!MMC_Read(0, sector_buffer)) // read MBR
+		return(0);
 
 	boot_sector=0;
 	partitioncount=1;
 
 	// If we can identify a filesystem on block 0 we don't look for partitions
-    if (compare((const char*)&sector_buffer[0x36], "FAT16   ",8)==0) // check for FAT16
+	if (compare((const char*)&sector_buffer[0x36], "FAT16   ",8)==0) // check for FAT16
 		partitioncount=0;
-    if (compare((const char*)&sector_buffer[0x52], "FAT32   ",8)==0) // check for FAT32
+	if (compare((const char*)&sector_buffer[0x52], "FAT32   ",8)==0) // check for FAT32
 		partitioncount=0;
 
 	if(partitioncount)
@@ -129,11 +129,11 @@ unsigned char FindDrive(void)
 		BootPrint("Read boot sector from first partition\n");
 	}
 
-    if (compare((const char*)&sector_buffer[0x52], "FAT32   ",8)==0) // check for FAT16
+	if (compare((const char*)&sector_buffer[0x52], "FAT32   ",8)==0) // check for FAT16
 		fat32=1;
 	else if (compare((const char*)&sector_buffer[0x36], "FAT16   ",8)!=0) // check for FAT32
 	{
-        printf("Unsupported partition type!\r");
+		printf("Unsupported partition type!\r");
 		return(0);
 	}
 

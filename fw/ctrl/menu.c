@@ -467,8 +467,8 @@ void HandleUI(void)
 			}
             else if (menusub == 5)	// Go to harddrives page.
 			{
-                 t_hardfile[0] = config.hardfile[0];
-                 t_hardfile[1] = config.hardfile[1];
+                 memcpy(&t_hardfile[0], &config.hardfile[0], sizeof(hardfileTYPE));
+                 memcpy(&t_hardfile[1], &config.hardfile[1], sizeof(hardfileTYPE));
                  menustate = MENU_SETTINGS_HARDFILE1;
 				 menusub=0;
 			}

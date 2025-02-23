@@ -775,7 +775,7 @@ char ScanDirectory(unsigned long mode, char *extension, unsigned char options)
                             { // scan the directory table and return first MAXDIRENTRIES alphabetically sorted entries
                                 if (nDirEntries < MAXDIRENTRIES) // initial directory scan (first 8 entries)
                                 {
-                                    DirEntry[nDirEntries] = *pEntry; // add new entry at first empty slot in storage buffer
+                                    memcpy(&DirEntry[nDirEntries], pEntry, sizeof(DIRENTRY)); // add new entry at first empty slot in storage buffer
                                     DirEntryLFN[nDirEntries][0] = 0;
                                     if (lfn[0])
                                         if (lfn_checksum(pEntry->Name) == name_checksum)
@@ -787,7 +787,7 @@ char ScanDirectory(unsigned long mode, char *extension, unsigned char options)
                                 {
                                     if (CompareDirEntries(pEntry, lfn, &DirEntry[sort_table[MAXDIRENTRIES-1]], DirEntryLFN[sort_table[MAXDIRENTRIES-1]]) < 0) // compare new entry with the last already found
                                     {
-                                        DirEntry[sort_table[MAXDIRENTRIES-1]] = *pEntry; // replace the last entry with the new one if appropriate
+                                        memcpy(&DirEntry[sort_table[MAXDIRENTRIES-1]], pEntry, sizeof(DIRENTRY)); // replace the last entry with the new one if appropriate
                                         DirEntryLFN[sort_table[MAXDIRENTRIES-1]][0] = 0;
                                         if (lfn[0])
                                             if (lfn_checksum(pEntry->Name) == name_checksum)
@@ -817,7 +817,7 @@ char ScanDirectory(unsigned long mode, char *extension, unsigned char options)
                                     nDirEntries = 1;
                                     iSelectedEntry = 0;
 
-                                    DirEntry[0] = *pEntry; // add the entry at the top of the buffer
+                                    memcpy(&DirEntry[0], pEntry, sizeof(DIRENTRY)); // add the entry at the top of the buffer
                                     DirEntryLFN[0][0] = 0;
                                     if (lfn[0])
                                         if (lfn_checksum(pEntry->Name) == name_checksum)
@@ -832,7 +832,7 @@ char ScanDirectory(unsigned long mode, char *extension, unsigned char options)
                                 {
                                     if (nDirEntries < MAXDIRENTRIES) // initial directory scan (first 8 entries)
                                     {
-                                        DirEntry[nDirEntries] = *pEntry; // add new entry at first empty slot in storage buffer
+                                        memcpy(&DirEntry[nDirEntries], pEntry, sizeof(DIRENTRY)); // add new entry at first empty slot in storage buffer
                                         DirEntryLFN[nDirEntries][0] = 0;
                                         if (lfn[0])
                                             if (lfn_checksum(pEntry->Name) == name_checksum)
@@ -844,7 +844,7 @@ char ScanDirectory(unsigned long mode, char *extension, unsigned char options)
                                     {
                                         if (CompareDirEntries(pEntry, lfn, &DirEntry[sort_table[MAXDIRENTRIES-1]], DirEntryLFN[sort_table[MAXDIRENTRIES-1]]) < 0) // compare new entry with the last already found
                                         {
-                                            DirEntry[sort_table[MAXDIRENTRIES-1]] = *pEntry; // replace the last entry with the new one if appropriate
+                                            memcpy(&DirEntry[sort_table[MAXDIRENTRIES-1]], pEntry, sizeof(DIRENTRY)); // replace the last entry with the new one if appropriate
                                             DirEntryLFN[sort_table[MAXDIRENTRIES-1]][0] = 0;
                                             if (lfn[0])
                                                 if (lfn_checksum(pEntry->Name) == name_checksum)
@@ -872,7 +872,7 @@ char ScanDirectory(unsigned long mode, char *extension, unsigned char options)
                                     if (CompareDirEntries(pEntry, lfn, &DirEntry[sort_table[MAXDIRENTRIES-1]], DirEntryLFN[sort_table[MAXDIRENTRIES-1]]) > 0) // found entry higher than the last one
                                     {
                                         nNewEntries++;
-                                        DirEntry[sort_table[0]] = *pEntry; // replace the first entry with the found one
+                                        memcpy(&DirEntry[sort_table[0]], pEntry, sizeof(DIRENTRY)); // replace the first entry with the found one
                                         DirEntryLFN[sort_table[0]][0] = 0;
                                         if (lfn[0])
                                             if (lfn_checksum(pEntry->Name) == name_checksum)
@@ -892,7 +892,7 @@ char ScanDirectory(unsigned long mode, char *extension, unsigned char options)
                                     if (CompareDirEntries(pEntry, lfn, &DirEntry[sort_table[MAXDIRENTRIES-1]], DirEntryLFN[sort_table[MAXDIRENTRIES-1]]) < 0)
                                         if (CompareDirEntries(pEntry, lfn, &DirEntry[sort_table[MAXDIRENTRIES-2]], DirEntryLFN[sort_table[MAXDIRENTRIES-2]]) > 0)
                                         {
-                                            DirEntry[sort_table[MAXDIRENTRIES-1]] = *pEntry;
+                                            memcpy(&DirEntry[sort_table[MAXDIRENTRIES-1]], pEntry, sizeof(DIRENTRY));
                                             DirEntryLFN[sort_table[MAXDIRENTRIES-1]][0] = 0;
                                             if (lfn[0])
                                                 if (lfn_checksum(pEntry->Name) == name_checksum)
@@ -912,7 +912,7 @@ char ScanDirectory(unsigned long mode, char *extension, unsigned char options)
                                             //sort_table[nDirEntries] = nDirEntries; // init sorting table
                                             nDirEntries++;
                                         }
-                                        DirEntry[sort_table[MAXDIRENTRIES-1]] = *pEntry; // replace the last entry with the found one
+                                        memcpy(&DirEntry[sort_table[MAXDIRENTRIES-1]], pEntry, sizeof(DIRENTRY)); // replace the last entry with the found one
                                         DirEntryLFN[sort_table[MAXDIRENTRIES-1]][0] = 0;
                                         if (lfn[0])
                                             if (lfn_checksum(pEntry->Name) == name_checksum)
@@ -932,7 +932,7 @@ char ScanDirectory(unsigned long mode, char *extension, unsigned char options)
                                     if (CompareDirEntries(pEntry, lfn, &DirEntry[sort_table[0]], DirEntryLFN[sort_table[0]]) > 0)
                                         if (CompareDirEntries(pEntry, lfn, &DirEntry[sort_table[1]], DirEntryLFN[sort_table[1]]) < 0)
                                         {
-                                            DirEntry[sort_table[0]] = *pEntry;
+                                            memcpy(&DirEntry[sort_table[0]], pEntry, sizeof(DIRENTRY));
                                             DirEntryLFN[sort_table[0]][0] = 0;
                                             if (lfn[0])
                                                 if (lfn_checksum(pEntry->Name) == name_checksum)
@@ -946,7 +946,7 @@ char ScanDirectory(unsigned long mode, char *extension, unsigned char options)
                                 {
                                     if (nNewEntries < MAXDIRENTRIES) // initial directory scan (first 8 entries)
                                     {
-                                        t_DirEntry[nNewEntries] = *pEntry; // add new entry at first empty slot in storage buffer
+                                        memcpy(&t_DirEntry[nNewEntries], pEntry, sizeof(DIRENTRY)); // add new entry at first empty slot in storage buffer
                                         t_DirEntryLFN[nNewEntries][0] = 0;
                                         if (lfn[0])
                                             if (lfn_checksum(pEntry->Name) == name_checksum)
@@ -959,7 +959,7 @@ char ScanDirectory(unsigned long mode, char *extension, unsigned char options)
                                     {
                                         if (CompareDirEntries(pEntry, lfn, &t_DirEntry[t_sort_table[MAXDIRENTRIES-1]], t_DirEntryLFN[t_sort_table[MAXDIRENTRIES-1]]) < 0) // compare new entry with the last already found
                                         {
-                                            t_DirEntry[t_sort_table[MAXDIRENTRIES-1]] = *pEntry; // replace the last entry with the new one if appropriate
+                                            memcpy(&t_DirEntry[t_sort_table[MAXDIRENTRIES-1]], pEntry, sizeof(DIRENTRY)); // replace the last entry with the new one if appropriate
                                             t_DirEntryLFN[t_sort_table[MAXDIRENTRIES-1]][0] = 0;
                                             if (lfn[0])
                                                 if (lfn_checksum(pEntry->Name) == name_checksum)
@@ -986,7 +986,7 @@ char ScanDirectory(unsigned long mode, char *extension, unsigned char options)
                                 {
                                     if (nNewEntries < MAXDIRENTRIES) // initial directory scan (first 8 entries)
                                     {
-                                        t_DirEntry[nNewEntries] = *pEntry; // add new entry at first empty slot in storage buffer
+                                        memcpy(&t_DirEntry[nNewEntries], pEntry, sizeof(DIRENTRY)); // add new entry at first empty slot in storage buffer
                                         t_DirEntryLFN[nNewEntries][0] = 0;
                                         if (lfn[0])
                                             if (lfn_checksum(pEntry->Name) == name_checksum)
@@ -999,7 +999,7 @@ char ScanDirectory(unsigned long mode, char *extension, unsigned char options)
                                     {
                                         if (CompareDirEntries(pEntry, lfn, &t_DirEntry[t_sort_table[MAXDIRENTRIES-1]], t_DirEntryLFN[t_sort_table[MAXDIRENTRIES-1]]) > 0) // compare new entry with the last already found
                                         {
-                                            t_DirEntry[t_sort_table[MAXDIRENTRIES-1]] = *pEntry; // replace the last entry with the new one if appropriate
+                                            memcpy(&t_DirEntry[t_sort_table[MAXDIRENTRIES-1]], pEntry, sizeof(DIRENTRY)); // replace the last entry with the new one if appropriate
                                             t_DirEntryLFN[t_sort_table[MAXDIRENTRIES-1]][0] = 0;
                                             if (lfn[0])
                                                 if (lfn_checksum(pEntry->Name) == name_checksum)
@@ -1032,7 +1032,7 @@ char ScanDirectory(unsigned long mode, char *extension, unsigned char options)
                                 {
                                     if (nNewEntries < MAXDIRENTRIES) // initial directory scan (first 8 entries)
                                     {
-                                        t_DirEntry[nNewEntries] = *pEntry; // add new entry at first empty slot in storage buffer
+                                        memcpy(&t_DirEntry[nNewEntries], pEntry, sizeof(DIRENTRY)); // add new entry at first empty slot in storage buffer
                                         t_DirEntryLFN[nNewEntries][0] = 0;
                                         if (lfn[0])
                                             if (lfn_checksum(pEntry->Name) == name_checksum)
@@ -1045,7 +1045,7 @@ char ScanDirectory(unsigned long mode, char *extension, unsigned char options)
                                     {
                                         if (CompareDirEntries(pEntry, lfn, &t_DirEntry[t_sort_table[MAXDIRENTRIES-1]], t_DirEntryLFN[t_sort_table[MAXDIRENTRIES-1]]) < 0) // compare new entry with the last already found
                                         {
-                                            t_DirEntry[t_sort_table[MAXDIRENTRIES-1]] = *pEntry; // replace the last entry with the new one if appropriate
+                                            memcpy(&t_DirEntry[t_sort_table[MAXDIRENTRIES-1]], pEntry, sizeof(DIRENTRY)); // replace the last entry with the new one if appropriate
                                             t_DirEntryLFN[t_sort_table[MAXDIRENTRIES-1]][0] = 0;
                                             if (lfn[0])
                                                 if (lfn_checksum(pEntry->Name) == name_checksum)
@@ -1098,7 +1098,7 @@ char ScanDirectory(unsigned long mode, char *extension, unsigned char options)
             // copy temporary buffer to display
             for (i = 0; i < nNewEntries; i++)
             {
-                DirEntry[sort_table[i + j]] = t_DirEntry[t_sort_table[i]];
+                memcpy(&DirEntry[sort_table[i + j]], &t_DirEntry[t_sort_table[i]], sizeof(DIRENTRY));
                 strcpy(DirEntryLFN[sort_table[i + j]], t_DirEntryLFN[t_sort_table[i]]);
             }
         }
@@ -1114,7 +1114,7 @@ char ScanDirectory(unsigned long mode, char *extension, unsigned char options)
             // copy temporary buffer to display
             for (i = 0; i < nNewEntries; i++)
             {
-                DirEntry[sort_table[j - i]] = t_DirEntry[t_sort_table[i]];
+                memcpy(&DirEntry[sort_table[j - i]], &t_DirEntry[t_sort_table[i]], sizeof(DIRENTRY));
                 strcpy(DirEntryLFN[sort_table[j - i]], t_DirEntryLFN[t_sort_table[i]]);
             }
             nDirEntries += nNewEntries;
@@ -1139,7 +1139,7 @@ char ScanDirectory(unsigned long mode, char *extension, unsigned char options)
                 { // first entry is what we were searching for
                     for (i = 0; i < nNewEntries; i++)
                     {
-                        DirEntry[sort_table[i]] = t_DirEntry[t_sort_table[i]];
+                        memcpy(&DirEntry[sort_table[i]], &t_DirEntry[t_sort_table[i]], sizeof(DIRENTRY));
                         strcpy(DirEntryLFN[sort_table[i]], t_DirEntryLFN[t_sort_table[i]]);
                     }
                     nDirEntries = nNewEntries;

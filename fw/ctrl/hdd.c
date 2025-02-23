@@ -841,7 +841,12 @@ void GetHardfileGeometry(hdfTYPE *pHDF)
 
     unsigned long total=0;
     unsigned long i, head, cyl, spt;
-    unsigned long sptt[] = { 63, 127, 255, -1 };
+    unsigned long sptt[4];
+
+    sptt[0] = 63;
+    sptt[1] = 127;
+    sptt[2] = 255;
+    sptt[3] = -1;
 
 	switch(pHDF->type)
 	{

@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "fat.h"
 
 
-fileTYPE file;
+//static fileTYPE file;
 static const char * firmware="DE1_BOOTBIN";
 char led;
 
