@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # hex2mem.py
 # 2012, rok.krajnc@gmail.com
@@ -50,7 +50,7 @@ def main():
   dat = [line.strip() for line in dat]
 
   # calculate needed address width
-  aw = int(math.ceil(math.log(len(dat), 2)))
+  aw = int(math.ceil(int(math.log(len(dat), 2))))
   if options.aw != 0:
     if int(options.aw) < aw:
       sys.stderr.write("ERROR: requested number of address bits is less than required (requested: %d, required: %d).\n" % (int(options.aw), aw))
@@ -109,7 +109,7 @@ def main():
     fo.write(     "  endcase\n")
     fo.write(     "end\n\n\n")
     fo.write(     "endmodule\n\n")
- 
+
   # done
   print ("File ", fon, " written successfully, using ", idx+1, "x", mw*4, " memory (", (idx+1)*mw*4," bits), will be probably inferred into ", int(math.ceil((idx+1)*mw*4/4096)), " Altera M4Ks.", sep="")
 

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 
 import sys
@@ -51,7 +51,7 @@ footer = "  END;\n"
 out = header + out + footer
 
 
-# write 
+# write
 with open(fon, 'w') as f:
   f.write(out)
 
