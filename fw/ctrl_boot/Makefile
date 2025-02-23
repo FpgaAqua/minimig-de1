@@ -61,7 +61,7 @@ OBJDIR=obj
 ### fw specific ###
 
 # include dirs
-CINCLUDES += -I. -Iinclude
+CINCLUDES += -I.
 
 # headers
 HEADERS=spr_defs.h or32_defs.h hardware.h string.h swap.h errors.h mmc.h fat.h
